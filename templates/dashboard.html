@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Быстрый снимок</h2>
+    <div class="cards">
+      <div class="card"><strong>События сегодня</strong><div>{{ dashboard.today_events|length }}</div></div>
+      <div class="card"><strong>Покупки в работе</strong><div>{{ dashboard.pending_purchases|length }}</div></div>
+      <div class="card"><strong>Быт на сегодня</strong><div>{{ dashboard.chores_today|length }}</div></div>
+      <div class="card"><strong>Pending approvals</strong><div>{{ dashboard.pending_decisions|length }}</div></div>
+      <div class="card"><strong>Inbox заметок</strong><div>{{ dashboard.notes_inbox|length }}</div></div>
+    </div>
+  </section>
+  <aside class="panel">
+    <h2>Главные цели недели</h2>
+    <ul class="list">
+      {% for goal in dashboard.weekly_goals %}
+        <li>{{ goal }}</li>
+      {% else %}
+        <li>Пока не заданы</li>
+      {% endfor %}
+    </ul>
+    <h2 style="margin-top: 16px;">Состояние системы</h2>
+    <div class="cards">
+      {% for item in dashboard.health %}
+        <div class="card"><strong>{{ item.component }}</strong><div class="pill">{{ item.status }}</div></div>
+      {% else %}
+        <div class="card">Пока нет записей диагностики</div>
+      {% endfor %}
+    </div>
+  </aside>
+</main>
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Archive</h2>
+    {% for name, rows in archived.items() %}
+      <h3>{{ name }}</h3>
+      <div class="cards">
+        {% for item in rows %}
+          <div class="card">{{ item }}</div>
+        {% else %}
+          <div class="card">Пусто</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </section>
+  <aside class="panel">
+    <h2>Экспорт</h2>
+    <p class="muted">Для выгрузки используйте экран Backups / Export или API `/api/v1/export`.</p>
+  </aside>
+</main>
+{% endblock %}
+

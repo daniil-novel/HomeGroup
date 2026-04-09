@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Analytics</h2>
+    <div class="cards">
+      {% for key, value in analytics.items() %}
+        <div class="card"><strong>{{ key }}</strong><div>{{ value }}</div></div>
+      {% endfor %}
+    </div>
+  </section>
+  <aside class="panel">
+    <h2>Принцип</h2>
+    <p class="muted">Аналитика короткая и бытовая: без оценивания отношений, только полезные сигналы.</p>
+  </aside>
+</main>
+{% endblock %}
+

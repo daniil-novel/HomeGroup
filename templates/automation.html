@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Automation Rules</h2>
+    <div class="card">
+      <strong>Диагностика</strong>
+      <pre>{{ diagnostics }}</pre>
+    </div>
+  </section>
+  <aside class="panel">
+    <h2>Режимы</h2>
+    <ul class="list">
+      <li>rotation</li>
+      <li>balance</li>
+      <li>manual</li>
+      <li>who_is_free</li>
+    </ul>
+  </aside>
+</main>
+{% endblock %}
+

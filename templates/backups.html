@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Backups / Export</h2>
+    <div class="cards">
+      {% for backup in backups %}
+        <div class="card">{{ backup.name }}</div>
+      {% else %}
+        <div class="card">Пока нет архивов</div>
+      {% endfor %}
+    </div>
+  </section>
+  <aside class="panel">
+    <h2>Действия</h2>
+    <form method="post" action="/mini-app/backups/create">
+      <button type="submit">Создать backup</button>
+    </form>
+    <form method="post" action="/mini-app/backups/restore" enctype="multipart/form-data">
+      <input type="file" name="archive">
+      <button type="submit">Восстановить backup</button>
+    </form>
+  </aside>
+</main>
+{% endblock %}

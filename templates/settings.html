@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Settings</h2>
+    <div class="cards">
+      {% for item in items %}
+        <div class="card">
+          <strong>{{ item.key }}</strong>
+          <div class="muted">{{ item.value_json }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+  <aside class="panel" x-data="{ values: '{}' }">
+    <h2>Обновить settings</h2>
+    <form method="post" action="/mini-app/settings">
+      <textarea name="payload" x-model="values" placeholder='{"timezone":"Europe/Moscow"}'></textarea>
+      <button type="submit">Сохранить</button>
+    </form>
+  </aside>
+</main>
+{% endblock %}
+

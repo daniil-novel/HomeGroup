@@ -79,11 +79,20 @@ ignore = [
   "EM101",
   "EM102",
   "TRY003",
+  "E501",
+  "B009",
+  "RUF001",
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["S101"]
 "migrations/**/*.py" = ["E402", "E501", "I001"]
+"src/homegroup/application/bootstrap.py" = ["E501", "RUF001"]
+"src/homegroup/presentation/app.py" = ["B008", "E501"]
+
+[[tool.mypy.overrides]]
+module = ["telethon", "telethon.*", "apscheduler.*"]
+ignore_missing_imports = true
 
 [tool.ruff.format]
 quote-style = "double"

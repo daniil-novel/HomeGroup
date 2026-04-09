@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Notes / Inbox</h2>
+    <div class="cards">
+      {% for item in items %}
+        <div class="card">
+          <strong>{{ item.text }}</strong>
+          <div class="muted">category_guess: {{ item.category_guess }}</div>
+          {% if suggestions[item.id] %}
+            <div class="muted">AI: {{ suggestions[item.id][1] }} → {{ suggestions[item.id][0] }}</div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="card">Пока нет заметок</div>
+      {% endfor %}
+    </div>
+  </section>
+  <aside class="panel">
+    <h2>Новая заметка</h2>
+    <form method="post" action="/mini-app/notes">
+      <input name="created_by" placeholder="created_by">
+      <textarea name="text_value" placeholder="Короткая мысль"></textarea>
+      <button type="submit">Сохранить заметку</button>
+    </form>
+  </aside>
+</main>
+{% endblock %}
+

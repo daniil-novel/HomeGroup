@@ -238,6 +238,22 @@ class Reminder(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     quiet_hours_json: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict, nullable=False)
 
 
+class SystemSetting(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "system_settings"
+
+    key: Mapped[str] = mapped_column(SAString(128), unique=True, nullable=False)
+    value_json: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict, nullable=False)
+
+
+class UserSetting(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "user_settings"
+    __table_args__ = (UniqueConstraint("user_id", "key"),)
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), nullable=False)
+    key: Mapped[str] = mapped_column(SAString(128), nullable=False)
+    value_json: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict, nullable=False)
+
+
 class MessageLink(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "message_links"
     __table_args__ = (

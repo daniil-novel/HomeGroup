@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Today Planner</h2>
+    <form method="post" action="/mini-app/today">
+      <input name="user_id" placeholder="user_id">
+      <input name="date_value" type="date">
+      <input name="location" placeholder="Где">
+      <div class="grid" style="padding: 0; grid-template-columns: 1fr 1fr;">
+        <input name="busy_from" type="time">
+        <input name="busy_to" type="time">
+      </div>
+      <textarea name="after_work" placeholder="После работы"></textarea>
+      <textarea name="important_today" placeholder="Важно сегодня"></textarea>
+      <textarea name="joint_plan" placeholder="Совместный план"></textarea>
+      <textarea name="shopping_today" placeholder="Купить по пути"></textarea>
+      <textarea name="household_evening" placeholder="Быт на вечер"></textarea>
+      <button type="submit">Сохранить план дня</button>
+    </form>
+  </section>
+  <aside class="panel">
+    <h2>Контекст</h2>
+    <p class="muted">Заполняйте только короткие actionable-данные. Вечером worker подхватит незавершённое и предложит переносы.</p>
+  </aside>
+</main>
+{% endblock %}
+

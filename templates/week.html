@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="grid">
+  <section class="panel">
+    <h2>Week Planner</h2>
+    <form method="post" action="/mini-app/week">
+      <input name="week_start" type="date">
+      <textarea name="summary" placeholder="Короткий weekly summary"></textarea>
+      <textarea name="goals" placeholder="По одной цели на строку"></textarea>
+      <textarea name="joint_plans" placeholder="Совместные планы по одной строке"></textarea>
+      <button type="submit">Сохранить неделю</button>
+    </form>
+  </section>
+  <aside class="panel">
+    <h2>Weekly review</h2>
+    <p class="muted">Закладывайте 3 главные цели, крупные события и бытовой контур недели.</p>
+  </aside>
+</main>
+{% endblock %}
+

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · HomeGroup</title>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    :root {
+      --bg: #f3efe5;
+      --paper: #fffdf8;
+      --ink: #1f2933;
+      --accent: #1f6f78;
+      --accent-soft: #d8ecee;
+      --line: #d7d2c8;
+      --warn: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Segoe UI", serif;
+      background:
+        radial-gradient(circle at top left, #efe0c8 0, transparent 38%),
+        linear-gradient(180deg, #faf6ed, var(--bg));
+      color: var(--ink);
+    }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    header { padding-bottom: 0; }
+    .shell {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(31, 41, 51, 0.08);
+      overflow: hidden;
+    }
+    .hero {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(31,111,120,.12), rgba(255,255,255,0));
+    }
+    nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    nav a.active { background: var(--accent-soft); border-color: var(--accent); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 16px;
+      padding: 16px;
+    }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .cards { display: grid; gap: 12px; }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: white;
+    }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.2rem; }
+    form { display: grid; gap: 10px; }
+    input, textarea, select, button {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      font: inherit;
+      background: white;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+    }
+    .muted { color: #6b7280; font-size: 0.95rem; }
+    .list { margin: 0; padding-left: 18px; }
+    .kv { display: grid; gap: 6px; }
+    .pill { display: inline-block; padding: 4px 8px; border-radius: 999px; background: var(--accent-soft); }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <div class="hero">
+        <h1>HomeGroup</h1>
+        <div class="muted">Приватная домашняя система для расписания, покупок, быта и решений</div>
+        <nav>
+          {% for item in [
+            ('dashboard', '/mini-app/dashboard', 'Dashboard'),
+            ('today', '/mini-app/today', 'Today'),
+            ('week', '/mini-app/week', 'Week'),
+            ('calendar', '/mini-app/calendar', 'Calendar'),
+            ('purchases', '/mini-app/purchases', 'Purchases'),
+            ('chores', '/mini-app/chores', 'Chores'),
+            ('decisions', '/mini-app/decisions', 'Decisions'),
+            ('notes', '/mini-app/notes', 'Notes'),
+            ('archive', '/mini-app/archive', 'Archive'),
+            ('settings', '/mini-app/settings', 'Settings'),
+            ('analytics', '/mini-app/analytics', 'Analytics'),
+            ('templates', '/mini-app/templates', 'Templates'),
+            ('automation', '/mini-app/automation', 'Automation'),
+            ('backups', '/mini-app/backups', 'Backups'),
+          ] %}
+            <a href="{{ item[1] }}" class="{% if screen == item[0] %}active{% endif %}">{{ item[2] }}</a>
+          {% endfor %}
+        </nav>
+      </div>
+      {% block body %}{% endblock %}
+    </div>
+  </header>
+</body>
+</html>
+

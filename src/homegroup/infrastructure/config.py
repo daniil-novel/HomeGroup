@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     telegram_second_user_id: int = 0
     telegram_second_user_username: str = ""
     openrouter_api_key: str = ""
-    openrouter_model: str = "google/gemini-2.5-flash-lite"
+    openrouter_model: str = "gemini-3.1-flash-lite"
     summary_mode: SummaryMode = SummaryMode.STANDARD
     mini_app_secret: str = "mini-app-dev-secret"
     quiet_hours_start: time = time(hour=23, minute=0)
