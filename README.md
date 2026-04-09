@@ -92,8 +92,19 @@ Production deployment targets a Linux VPS with a public domain behind Caddy. See
 - `.env.example`
 - `docs/deployment.md`
 - `docs/operations.md`
+- `docs/telegram-setup.md`
 
 ## Notes
 
 - Provisioning requires real Telegram credentials and an interactive owner login on the first run.
 - The current target VPS `91.84.104.36` still has an SSH daemon problem: TCP on port `22` is reachable, but the connection breaks before normal authentication completes, so remote bootstrap is not automated yet.
+
+## To see the real Telegram group
+
+1. Fill `.env` with real Telegram, OpenRouter and domain values.
+2. Deploy the stack and run migrations.
+3. Configure the bot in BotFather and point the webhook to your public domain.
+4. Run `uv run homegroup provision`.
+5. During the first provisioning run, confirm the Telegram login for the owner account.
+6. After provisioning finishes, open Telegram under the owner account and look for the new private forum supergroup named `Дом`.
+7. The second user will see the same group after being invited and accepting the invite.
