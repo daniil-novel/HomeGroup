@@ -15,24 +15,20 @@ dependencies = [
   "fastapi>=0.116.0,<1",
   "httpx>=0.28.0,<1",
   "jinja2>=3.1.6,<4",
+  "mypy>=1.17.0,<2",
   "orjson>=3.11.0,<4",
   "psycopg[binary]>=3.2.0,<4",
   "pydantic-settings>=2.10.0,<3",
+  "pytest>=8.4.0,<9",
+  "pytest-asyncio>=1.1.0,<2",
+  "pytest-cov>=6.2.0,<7",
   "python-multipart>=0.0.20,<1",
+  "ruff>=0.12.0,<0.13",
   "sqlalchemy>=2.0.41,<3",
   "structlog>=25.4.0,<26",
   "telethon>=1.40.0,<2",
   "typer>=0.16.0,<1",
   "uvicorn[standard]>=0.35.0,<1",
-]
-
-[project.optional-dependencies]
-dev = [
-  "mypy>=1.17.0,<2",
-  "pytest>=8.4.0,<9",
-  "pytest-asyncio>=1.1.0,<2",
-  "pytest-cov>=6.2.0,<7",
-  "ruff>=0.12.0,<0.13",
 ]
 
 [project.scripts]
@@ -76,7 +72,6 @@ select = [
   "RSE",
   "RUF",
   "SIM",
-  "TC",
   "TID",
   "TRY",
 ]
@@ -88,6 +83,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["S101"]
+"migrations/**/*.py" = ["E402", "E501", "I001"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -103,24 +99,16 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 plugins = []
 
-[[tool.mypy.overrides]]
-module = ["telethon.*"]
-ignore_missing_imports = true
-
 [tool.pytest.ini_options]
 minversion = "8.0"
-addopts = "-q --cov=src/homegroup --cov-report=term-missing --cov-report=xml"
+addopts = "-q --cov=homegroup --cov-report=term-missing --cov-report=xml"
 testpaths = ["tests"]
 asyncio_mode = "auto"
 
 [tool.coverage.run]
 branch = true
-source = ["src/homegroup"]
+source = ["homegroup"]
 
 [tool.coverage.report]
 skip_covered = true
 show_missing = true
-
-[tool.uv]
-default-groups = ["dev"]
-
