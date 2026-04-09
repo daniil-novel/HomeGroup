@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Sync
+        run: uv sync --all-extras --dev
+      - name: Ruff
+        run: uvx --from . ruff check .
+      - name: Mypy
+        run: uvx --from . mypy src
+      - name: Pytest
+        run: uvx --from . pytest
+      - name: Alembic smoke test
+        env:
+          HOMEGROUP_DATABASE_URL: sqlite+pysqlite:///./ci.db
+        run: uv run alembic upgrade head
+

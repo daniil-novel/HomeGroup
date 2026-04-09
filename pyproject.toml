@@ -1,0 +1,126 @@
+[project]
+name = "homegroup"
+version = "0.1.0"
+description = "Production-grade Telegram household system for two people."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Daniil Novel" }
+]
+dependencies = [
+  "aiogram>=3.20.0,<4",
+  "alembic>=1.16.0,<2",
+  "apscheduler>=3.11.0,<4",
+  "fastapi>=0.116.0,<1",
+  "httpx>=0.28.0,<1",
+  "jinja2>=3.1.6,<4",
+  "orjson>=3.11.0,<4",
+  "psycopg[binary]>=3.2.0,<4",
+  "pydantic-settings>=2.10.0,<3",
+  "python-multipart>=0.0.20,<1",
+  "sqlalchemy>=2.0.41,<3",
+  "structlog>=25.4.0,<26",
+  "telethon>=1.40.0,<2",
+  "typer>=0.16.0,<1",
+  "uvicorn[standard]>=0.35.0,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.17.0,<2",
+  "pytest>=8.4.0,<9",
+  "pytest-asyncio>=1.1.0,<2",
+  "pytest-cov>=6.2.0,<7",
+  "ruff>=0.12.0,<0.13",
+]
+
+[project.scripts]
+homegroup = "homegroup.cli:app"
+
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/homegroup"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "F",
+  "W",
+  "I",
+  "N",
+  "UP",
+  "B",
+  "A",
+  "C4",
+  "DTZ",
+  "EM",
+  "FA",
+  "G",
+  "ICN",
+  "INP",
+  "ISC",
+  "LOG",
+  "PIE",
+  "PT",
+  "PTH",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "TC",
+  "TID",
+  "TRY",
+]
+ignore = [
+  "EM101",
+  "EM102",
+  "TRY003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "src"
+strict = true
+pretty = true
+show_error_codes = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+plugins = []
+
+[[tool.mypy.overrides]]
+module = ["telethon.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q --cov=src/homegroup --cov-report=term-missing --cov-report=xml"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+branch = true
+source = ["src/homegroup"]
+
+[tool.coverage.report]
+skip_covered = true
+show_missing = true
+
+[tool.uv]
+default-groups = ["dev"]
+

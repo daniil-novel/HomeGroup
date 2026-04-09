@@ -1,0 +1,2 @@
+"""HomeGroup package."""
+
