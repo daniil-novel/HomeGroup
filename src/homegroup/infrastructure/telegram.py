@@ -165,7 +165,8 @@ class TelethonProvisioningService(ProvisioningGateway):
                 self.settings.telegram_api_hash,
             ) as client:
                 chat = await self._ensure_chat(client)
-                await client(ToggleForumRequest(channel=chat, enabled=True))
+                if not bool(getattr(chat, "forum", False)):
+                    await client(ToggleForumRequest(channel=chat, enabled=True, tabs=False))
                 owner = await client.get_me()
                 if owner is None:
                     raise RuntimeError("Unable to resolve Telegram owner profile.")
