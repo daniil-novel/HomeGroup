@@ -16,6 +16,7 @@ from homegroup.infrastructure.telegram import (
     AiogramTelegramGateway,
     DisabledTelegramGateway,
     TelethonProvisioningService,
+    run_polling_bot,
 )
 from homegroup.worker import HomeGroupWorker
 
@@ -47,6 +48,13 @@ def worker() -> None:
     settings = settings_obj
     gateway = AiogramTelegramGateway(settings) if settings.bot_token else DisabledTelegramGateway()
     HomeGroupWorker(settings, service, gateway).run()
+
+
+@app.command()
+def bot(drop_pending_updates: bool = False) -> None:
+    service, settings_obj = _service()
+    settings = settings_obj
+    run_polling_bot(settings, service, drop_pending_updates=drop_pending_updates)
 
 
 @app.command()

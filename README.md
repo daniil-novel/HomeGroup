@@ -29,6 +29,7 @@ It includes:
 uv sync
 uv run alembic upgrade head
 uv run homegroup serve --reload
+uv run homegroup bot
 ```
 
 Open the server-rendered Mini App at `http://127.0.0.1:8000/mini-app/dashboard`.
@@ -60,6 +61,7 @@ uv sync
 uv run alembic upgrade head
 uv run homegroup diagnostics
 uv run homegroup serve --reload
+uv run homegroup bot
 ```
 
 Useful URLs:
@@ -74,6 +76,7 @@ Useful URLs:
 
 ```powershell
 uv run homegroup serve
+uv run homegroup bot
 uv run homegroup worker
 uv run homegroup provision
 uv run homegroup migrate
@@ -97,6 +100,7 @@ Production deployment targets a Linux VPS with a public domain behind an existin
 ## Notes
 
 - Provisioning requires real Telegram credentials and an interactive owner login on the first run.
+- In local development with `HOMEGROUP_DEBUG=true`, the Mini App screens can be opened directly in the browser on `127.0.0.1` without Telegram `initData`.
 - The current target VPS `91.84.104.36` still has an SSH daemon problem: TCP on port `22` is reachable, but the connection breaks before normal authentication completes, so remote bootstrap is not automated yet.
 - On a server with `3x-ui` and VPN services, HomeGroup must be deployed as a separate app behind the existing reverse proxy, without taking over `80`, `443`, `7443` or any VPN ports.
 

@@ -605,3 +605,28 @@ async def handle_update(dispatcher: Dispatcher, settings: Settings, update_data:
     bot = Bot(token=settings.bot_token)
     update = Update.model_validate(update_data)
     await dispatcher.feed_webhook_update(bot=bot, update=update)
+
+
+def run_polling_bot(
+    settings: Settings,
+    service: HomeGroupService,
+    *,
+    drop_pending_updates: bool = False,
+) -> None:
+    if not settings.bot_token:
+        raise RuntimeError("Bot token is required to run polling mode.")
+
+    dispatcher = build_dispatcher(settings, service)
+
+    async def runner() -> None:
+        bot = Bot(token=settings.bot_token)
+        try:
+            await bot.delete_webhook(drop_pending_updates=drop_pending_updates)
+            await dispatcher.start_polling(
+                bot,
+                allowed_updates=dispatcher.resolve_used_update_types(),
+            )
+        finally:
+            await bot.session.close()
+
+    asyncio.run(runner())
