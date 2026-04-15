@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     bot_token: str = ""
     telegram_api_id: int = 0
     telegram_api_hash: str = ""
+    telegram_session_name: str = "homegroup_provisioning"
     telegram_owner_phone: str = ""
     telegram_second_user_id: int = 0
     telegram_second_user_username: str = ""
