@@ -18,7 +18,11 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
     ToggleForumRequest,
 )
-from telethon.tl.functions.messages import CreateForumTopicRequest, GetForumTopicsRequest
+from telethon.tl.functions.messages import (
+    CreateForumTopicRequest,
+    EditForumTopicRequest,
+    GetForumTopicsRequest,
+)
 from telethon.tl.types import Channel, ChatAdminRights
 from telethon.tl.types import User as TelegramUser
 
@@ -193,6 +197,7 @@ class TelethonProvisioningService(ProvisioningGateway):
                     )
                     await self._grant_bot_admin(client, chat, bot_user)
                 topics = await self._ensure_topics(client, chat)
+                await self._hide_general_topic(client, chat)
                 self._sync_database(chat, accounts, topics)
                 await self._ensure_topic_seed_messages(client, chat, topics, bot_username)
                 return f"Provisioned chat {chat.id} with {len(topics)} topics"
@@ -300,6 +305,25 @@ class TelethonProvisioningService(ProvisioningGateway):
             if isinstance(title, str) and isinstance(thread_id, int):
                 topics[title] = thread_id
         return topics
+
+    async def _hide_general_topic(self, client: TelegramClient, chat: Channel) -> None:
+        result = await client(
+            GetForumTopicsRequest(
+                peer=chat,
+                offset_date=None,
+                offset_id=0,
+                offset_topic=0,
+                limit=100,
+            )
+        )
+        for topic in result.topics:
+            topic_id = getattr(topic, "id", None)
+            title = getattr(topic, "title", None)
+            hidden = bool(getattr(topic, "hidden", False))
+            if topic_id == 1 or title == "General":
+                if not hidden and isinstance(topic_id, int):
+                    await client(EditForumTopicRequest(peer=chat, topic_id=topic_id, hidden=True))
+                return
 
     def _sync_database(
         self,
