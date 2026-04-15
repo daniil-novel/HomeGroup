@@ -85,10 +85,10 @@ uv run homegroup backup-restore <archive>
 
 ## Deployment
 
-Production deployment targets a Linux VPS with a public domain behind Caddy. See:
+Production deployment targets a Linux VPS with a public domain behind an existing reverse proxy or standalone Nginx. See:
 
 - `ops/compose.yaml`
-- `ops/Caddyfile`
+- `ops/nginx-homegroup.conf.example`
 - `.env.example`
 - `docs/deployment.md`
 - `docs/operations.md`
@@ -98,6 +98,7 @@ Production deployment targets a Linux VPS with a public domain behind Caddy. See
 
 - Provisioning requires real Telegram credentials and an interactive owner login on the first run.
 - The current target VPS `91.84.104.36` still has an SSH daemon problem: TCP on port `22` is reachable, but the connection breaks before normal authentication completes, so remote bootstrap is not automated yet.
+- On a server with `3x-ui` and VPN services, HomeGroup must be deployed as a separate app behind the existing reverse proxy, without taking over `80`, `443`, `7443` or any VPN ports.
 
 ## To see the real Telegram group
 
